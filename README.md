@@ -6,3 +6,5 @@ Kelompok :
 3. Kevin Sutardi / 13217088
 4. Ramadhita Umitaibatin / 18317008
 5. Muhammad Harun Alrasyid / 18317009
+
+Implementasi load file belum dicompile pake library, logika harusnya udah bener
