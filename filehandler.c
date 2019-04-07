@@ -15,11 +15,12 @@ void savePraktikum(praktikum listPraktikum[12][5][4])
             fprintf(filePointer, "%d|%s|", i + 3, getHari(j));
             for (k=0; k < 4; k++)
             {
-                fprintf(filePointer, "%s%s|", getMatkul(list[i][j][k].matkul), getGroup(list[i][j][k].matkul, list[i][j][k].group));fprintf(filePointer, "%s%s|", getMatkul(list[i][j][k].matkul), getGroup(list[i][j][k].matkul, list[i][j][k].group));
+                fprintf(filePointer, "%s%s|", getMatkul(listPraktikum[i][j][k].matkul), getGroup(listPraktikum[i][j][k].matkul, listPraktikum[i][j][k].group));
             }
             fputs("\n", filePointer);
         }
     }
+    fclose(filePointer);
 }
 
 void saveAsisten(char listAsisten[12][5][4][2])
@@ -42,4 +43,5 @@ void saveAsisten(char listAsisten[12][5][4][2])
         }
 
     }
+    fclose(filePointer);
 }

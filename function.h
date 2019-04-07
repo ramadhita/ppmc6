@@ -3,7 +3,7 @@
 #include <math.h>
 #include <stdlib.h>
 #include <stdio.h>
-
+#include <string.h>
 
 typedef struct Praktikum
 {

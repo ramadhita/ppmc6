@@ -1,0 +1,32 @@
+# depslib dependency file v1.0
+1554311729 source:c:\users\grimgrin\desktop\pmc\tubesboi\main.c
+	<stdio.h>
+	<stdlib.h>
+	"function.h"
+	"filehandler.h"
+
+1554309630 c:\users\grimgrin\desktop\pmc\tubesboi\function.h
+	<math.h>
+	<stdlib.h>
+	<stdio.h>
+	<string.h>
+
+1554275245 c:\users\grimgrin\desktop\pmc\tubesboi\filehandler.h
+	<stdio.h>
+	<stdlib.h>
+	"function.h"
+
+1554272670 source:c:\users\grimgrin\desktop\pmc\function.c
+	"function.h"
+
+1554273495 c:\users\grimgrin\desktop\pmc\function.h
+	<math.h>
+	<stdlib.h>
+	<stdio.h>
+
+1554309715 source:c:\users\grimgrin\desktop\pmc\tubesboi\filehandler.c
+	"filehandler.h"
+
+1554311746 source:c:\users\grimgrin\desktop\pmc\tubesboi\function.c
+	"function.h"
+
