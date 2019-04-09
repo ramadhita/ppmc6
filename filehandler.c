@@ -310,3 +310,39 @@ void loadAsisten(char list[12][5][4][2])
     }
 
 }
+
+//NAMBAH FUNGSI RULE CHECKER, KALO LOAD PRAKTIKUM JALAN HARUSNYA RULE CHECKER JUGA JALAN
+void ruleCheck()
+{
+	int countCheck = 0;
+	int failedCheck = 0;
+	char* tempText; //buat nampung string hari
+	char* text;
+	printf("[DRC]\n");
+	printf("Masukkan File DRC (dalam format .txt) :");
+	scanf("%s", &text);
+	getchar();
+	//olah file eksternal
+	//data dimasukkin ke array
+	FILE* filePointer;
+	filePointer = fopen(text);
+	while(!feof(filePointer)){
+		int countCheck = countCheck + 1;
+		fscanf("%d %s", &arrRuleCheck[countCheck].minggu, &tempText);
+		arrRuleCheck[countCheck].hari = getHariIndex2(tempText); //cuman baca harinya aja gak perlu validasi pake index praktikum
+	}
+	for(i=0; i<countCheck; i++)
+	{
+		for(int j=0; j<4; j++)
+		{	
+			if(listPraktikum[ruleCheck[i].minggu][ruleCheck[i].hari][j]) != NULL //jika pada minggu, dan hari tersebut terdapat praktikum
+																				// maka failedCheck akan tambah 1
+			{
+				failedCheck = failedCheck + 1;
+			}
+		}
+	}
+	printf("\n");
+	printf("%d/%d Rule is checked",(countCheck-failedCheck),countCheck);
+	return 0;
+}
