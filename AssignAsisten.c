@@ -65,8 +65,15 @@ int getIndexHari (char *str)
 
 void AssignAsisten(char listAsisten[12][5][4][2], praktikum listPraktikum[12][5][4])
 {
-	char input[8], Asis,nama[8],prak1[8],prak2[8];
-	int minggu=100, hari=100, lab=100, asis, gbs[3]; //cant untuk mengetahui hari yang berhalangan, day untuk konversi hari ke integer
+	char input[8], Asis,nama[8];
+	int minggu=100, hari=100, lab=100, asis; //cant untuk mengetahui hari yang berhalangan, day untuk konversi hari ke integer
+	int i,j,k,l;
+	for (i = 0; i < 12; ++i)
+		for (j = 0; j < 5; ++j)
+			for (k = 0; k < 4; ++k)
+				for (l = 0; l < 2; ++l)
+					listAsisten[12][5][4][2]=' ';
+
 	printf("[Mode Assign Asisten]\n Isi 'q' atau 'Q' untuk kembali ke menu\n");
 	while (minggu!=-1 && lab!=-1 && hari!= -1 && asis!= -1)
 	{
@@ -139,10 +146,11 @@ void AssignAsisten(char listAsisten[12][5][4][2], praktikum listPraktikum[12][5]
 				} else
 				if (listPraktikum[minggu][hari][lab].matkul == 1)
 				{
-					if (listAsisten[minggu][hari][lab][0]=='') //artinya dia masih null, belum ada asisten
+					if (listAsisten[minggu][hari][lab][0]==' ') //artinya dia masih null, belum ada asisten
 					listAsisten[minggu][hari][lab][0]='A'; //Masukkan ke list karena memenuhi, dan masih kosong
-					else if (listAsisten[minggu][hari][lab][1]=='') //Artinya udah ada satu asisten disitu, jadi ditambahnya ke array kedua
+					else if (listAsisten[minggu][hari][lab][1]==' ') //Artinya udah ada satu asisten disitu, jadi ditambahnya ke array kedua
 					listAsisten[minggu][hari][lab][1]='A';
+					else printf("Sudah ada dua asisten.\n");
 				//Kalo dua duanya nggak kosong, maka gabakal keisi
 				} else printf("Jadwal Asisten Praktikum %s tidak sesuai (tidak ada Rombongan EL2205)\n", nama);
 			break;
@@ -155,36 +163,61 @@ void AssignAsisten(char listAsisten[12][5][4][2], praktikum listPraktikum[12][5]
 				} else
 				if (listPraktikum[minggu][hari][lab].matkul == 1)
 				{
-					if (listAsisten[minggu][hari][lab][0]=='') //artinya dia masih null, belum ada asisten
+					if (listAsisten[minggu][hari][lab][0]==' ') //artinya dia masih null, belum ada asisten
 					listAsisten[minggu][hari][lab][0]='B'; //Masukkan ke list karena memenuhi, dan masih kosong
-					else if (listAsisten[minggu][hari][lab][1]=='') //Artinya udah ada satu asisten disitu, jadi ditambahnya ke array kedua
+					else if (listAsisten[minggu][hari][lab][1]==' ') //Artinya udah ada satu asisten disitu, jadi ditambahnya ke array kedua
 					listAsisten[minggu][hari][lab][1]='B';
+					else printf("Sudah ada dua asisten.\n");
 				//Kalo dua duanya nggak kosong, maka gabakal keisi
 				} else printf("Jadwal Asisten Praktikum %s tidak sesuai (tidak ada Rombongan EL2205)\n", nama);
 			break;
-		/*
+		
 			case 'C': ;
-				strcpy(nama,"Cici");
-				strcpy(prak1,"EL2205");
-				gbs[0]=1;
-				gbs[1]=2;
+				//Cici gabisa hari Selasa dan Rabu, dan dia cuma asisten EL2205
+				nstrcpy(nama,"Cici");
+				if (hari == 1) printf("Jadwal Asisten Praktikum %s tidak sesuai (%s berhalangan di hari Selasa)\n",nama, nama);
+				else if (hari ==2) printf("Jadwal Asisten Praktikum %s tidak sesuai (%s berhalangan di hari Rabu)\n",nama, nama);
+				else if (listPraktikum[minggu][hari][lab].matkul == 1)
+				{
+					if (listAsisten[minggu][hari][lab][0]==' ') //artinya dia masih null, belum ada asisten
+					listAsisten[miggu][hari][lab][0]='C'; //Masukkan ke list karena memenuhi, dan masih kosong
+					else if (listAsisten[minggu][hari][lab][1]==' ') //Artinya udah ada satu asisten disitu, jadi ditambahnya ke array kedua
+					listAsisten[minggu][hari][lab][1]='C';
+					else printf("Sudah ada dua asisten.\n");
+				//Kalo dua duanya nggak kosong, maka tidak akan ada yang terisi
+				} else printf("Jadwal Asisten Praktikum %s tidak sesuai (tidak ada Rombongan EL2205)\n", nama);
 			break;
-			
+		
 			case 'D': ;
 				strcpy(nama,"Doni");
-				strcpy(prak1,"EL2205");
-				gbs[0]=0;
-				gbs[1]=2;
+				if (hari == 1) printf("Jadwal Asisten Praktikum %s tidak sesuai (%s berhalangan di hari Selasa)\n",nama, nama);
+				else if (hari ==2) printf("Jadwal Asisten Praktikum %s tidak sesuai (%s berhalangan di hari Rabu)\n",nama, nama);
+				else if (listPraktikum[minggu][hari][lab].matkul == 1)
+				{
+					if (listAsisten[minggu][hari][lab][0]==' ') //artinya dia masih null, belum ada asisten
+					listAsisten[miggu][hari][lab][0]='D'; //Masukkan ke list karena memenuhi, dan masih kosong
+					else if (listAsisten[minggu][hari][lab][1]==' ') //Artinya udah ada satu asisten disitu, jadi ditambahnya ke array kedua
+					listAsisten[minggu][hari][lab][1]='D';
+					else printf("Sudah ada dua asisten.\n");
+				//Kalo dua duanya nggak kosong, maka tidak akan ada yang terisi
+				} else printf("Jadwal Asisten Praktikum %s tidak sesuai (tidak ada Rombongan EL2205)\n", nama);
 			break;
-			
+		
 			case 'E': ;
 				strcpy(nama,"Endang");
 				strcpy(prak1,"EL2205");
 				strcpy(prak2,"EL2208");
-				gbs[0]=-1;
-				gbs[1]=-1;
+				if (listPraktikum[minggu][hari][lab].matkul == 1)
+				{
+					if (listAsisten[minggu][hari][lab][0]==' ') //artinya dia masih null, belum ada asisten
+					listAsisten[miggu][hari][lab][0]='E'; //Masukkan ke list karena memenuhi, dan masih kosong
+					else if (listAsisten[minggu][hari][lab][1]==' ') //Artinya udah ada satu asisten disitu, jadi ditambahnya ke array kedua
+					listAsisten[minggu][hari][lab][1]='E';
+					else printf("Sudah ada dua asisten.\n");
+				//Kalo dua duanya nggak kosong, maka tidak akan ada yang terisi
+				} else printf("Jadwal Asisten Praktikum %s tidak sesuai (tidak ada Rombongan EL2205 maupun EB2200)\n", nama);
 			break;
-			
+		/*	
 			case 'F': ;
 				strcpy(nama,"Fadel");
 				strcpy(prak1,"EL2205");
