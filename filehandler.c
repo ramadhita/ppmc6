@@ -44,28 +44,95 @@ void loadPraktikum(praktikum* listPraktikum[12][5][4]){
 
 //load asisten
 //masih belum bener, belum didebug kayak bagian praktikum
-void loadAsisten(char listAsisten[12][5][4][2]){
-	FILE *filePointer;
-    int i, j, k;
-    int counter = 1;
-    filePointer = fopen("Jadwal_Praktikum_Semester_2_asisten.csv", "r+");
-    if(filePointer == NULL){
-    	printf("File tidak tersedia");
-    } else {
-    	while(filePointer != NULL){
-    		counter++;
-    		for(i=0; i<12; i++){
-    			for(j=0; j<5; j++){
-    				if(counter == 1 && counter == 2){
-    					fscanf(filePointer, "%*d|%*s|%s,%s|%s,%s|%s,%s|%s,%s",
-    						&listAsisten[i][j][0][1], &listAsisten[i][j][0][2],
-    						&listAsisten[i][j][1][1], &listAsisten[i][j][1][2],
-    						&listAsisten[i][j][2][1], &listAsisten[i][j][2][2],
-    						&listAsisten[i][j][3][1], &listAsisten[i][j][3][2],);
-    				}
-    			}
-    		}
-    	}
+void loadAsisten(char listAsisten[12][5][4][2])
+{
+    FILE *filePointer;
+    int  i, j, k, line, minggu, hari;
+    char *asisten2, *asisten1;
+    char c;
+    char *gn, *gi;
+    char str[512], *tok;
+    //hapusHeader(); //hapus bagian 2 line awal (header)
+
+    //validasi file eksternal
+    if(access("Jadwal_Praktikum_Semester_2_rombongan.csv", F_OK ) != -1)
+    {
+        filePointer = fopen("Jadwal_Praktikum_Semester_2_rombongan.csv", "r");
+        i = 0;
+        j = 0;
+        line = 0;
+        //strcpy(str, "");
+        while ((c = fgetc(filePointer)) != EOF)
+        {
+            //printf("%c", c);
+            if (c == '\n')
+            {
+
+                str[i] = '\0';
+                //printf(" Line: %s\n", str);
+                line += 1;
+                if (line > 2)
+                {
+                    j = 0; // Token delimiter count
+                    tok = strtok(str, "|");
+                    while(tok != NULL)
+                    {
+                        //printf("Token %d : %s",k, tok);
+
+                        switch(j)
+                        {
+                            case 0:
+                                minggu = getMingguIndex(tok);
+                                //printf("Minggu %d - ", minggu);
+                            break;
+                            case 1:
+                                hari = getHariIndex(1, 1, tok);
+                                //printf("%d - % d | ", minggu, hari);
+                                for (k = 0; k < 4; k++)
+                                {
+                                    listAsisten[minggu][hari - 1][k][0] = 0;
+                                    listAsisten[minggu][hari - 1][k][1] = 0;
+                                }
+
+                            break;
+                            default:
+                                gn = strtok(tok, "-");
+                                asisten1 = gn;
+                                //printf("%s-", gn);
+                                gn = strtok(NULL, "-");
+                                asisten2 = gn;
+                               // printf("Debug %d% - s", prak, getGroup(prak, grup));
+                                listAsisten[minggu][hari-1][j-2][0] = asisten1[0];
+                                listAsisten[minggu][hari-1][j-2][1] = asisten2[0];
+                                //printf("%s%s|",getMatkul(prak), getGroup(prak, grup));
+                                //printf("%s", gn);
+                            break;
+                        }
+                        j += 1;
+                        tok = strtok(NULL, "|");
+
+                    }
+
+                }
+                i = 0;
+                //printf("\n");
+                //printf("Line %d\n", i);
+            }
+            else
+            {
+                str[i] = c;
+                i += 1;
+                //printf("%c", c);
+
+            }
+        }
+        //printf("File tidak tersedia.");
+        fclose(filePointer);
+
+    }
+    else
+    {
+       printf("File does not exist.");
     }
 }
 
