@@ -2,6 +2,8 @@
 #define FILEHANDLER_H
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
 #include "function.h"
 
 void savePraktikum(praktikum listPraktikum[12][5][4]);

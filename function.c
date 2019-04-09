@@ -3,14 +3,15 @@
 char* getGroup(int matkul, int index)
 {
     char *group;
-    group = malloc(2 * sizeof(char));
+    group = malloc(3 * sizeof(char));
     group[0] = '\0';
     group[1] = '\0';
     group[2] = '\0';
     switch(matkul)
     {
         case 1:
-            group[0] = (char)64 + (int)(ceil((double)index / 2));
+            group[0] = (char)(64 + (int)(ceil((double)index / 2)));
+            //printf("Letter: %c *", group[0]);
             group[1] = (char)(50 - index % 2);
             break;
         case 2:
@@ -73,7 +74,7 @@ char* getMatkul(int index)
         return "EB2200-";
         break;
     default:
-        return "";
+        return " ";
         break;
     }
 }
@@ -82,23 +83,23 @@ char* getHari(int index)
 {
     switch (index)
     {
-    case 0:
+    case 1:
         return "Senin";
         break;
-    case 1:
+    case 2:
         return "Selasa";
         break;
-    case 2:
+    case 3:
         return "Rabu";
         break;
-    case 3:
+    case 4:
         return "Kamis";
         break;
-    case 4:
+    case 5:
         return "Jumat";
         break;
     default:
-        return "Senin";
+        return "";
         break;
     }
 }
@@ -156,7 +157,7 @@ void assignPraktikum(praktikum listPraktikum[12][5][4])
             {
                 printf("Minggu ke: ");
                 gets(input);
-                while(getMingguIndex(input) == 0)
+                while(getMingguIndex(input) == -2)
                 {
                     printf("Inputan salah. Pastikan minggu sesuai rentang.\n");
                     printf("Minggu ke: ");
@@ -192,8 +193,8 @@ void assignPraktikum(praktikum listPraktikum[12][5][4])
                                 ruangIndex =  getRuangIndex(input);
                                 if (ruangIndex != -1)
                                 {
-                                    listPraktikum[mingguIndex - 1][hariIndex - 1][ruangIndex - 1].matkul = prakIndex;
-                                    listPraktikum[mingguIndex - 1][hariIndex - 1][ruangIndex - 1].group = groupIndex;
+                                    listPraktikum[mingguIndex][hariIndex - 1][ruangIndex - 1].matkul = prakIndex;
+                                    listPraktikum[mingguIndex][hariIndex - 1][ruangIndex - 1].group = groupIndex;
                                 }
                                 else
                                 {
@@ -218,8 +219,8 @@ void assignPraktikum(praktikum listPraktikum[12][5][4])
                                 ruangIndex =  getRuangIndex(input);
                                 if (ruangIndex != -1)
                                 {
-                                    listPraktikum[mingguIndex - 1][hariIndex - 1][ruangIndex - 1].matkul = prakIndex;
-                                    listPraktikum[mingguIndex - 1][hariIndex - 1][ruangIndex - 1].group = groupIndex;
+                                    listPraktikum[mingguIndex][hariIndex - 1][ruangIndex - 1].matkul = prakIndex;
+                                    listPraktikum[mingguIndex][hariIndex - 1][ruangIndex - 1].group = groupIndex;
                                 }
                                 else
                                 {
@@ -241,8 +242,8 @@ void assignPraktikum(praktikum listPraktikum[12][5][4])
                             ruangIndex =  getRuangIndex(input);
                             if (ruangIndex != -1)
                             {
-                                listPraktikum[mingguIndex - 1][hariIndex - 1][ruangIndex - 1].matkul = prakIndex;
-                                listPraktikum[mingguIndex - 1][hariIndex - 1][ruangIndex - 1].group = groupIndex;
+                                listPraktikum[mingguIndex][hariIndex - 1][ruangIndex - 1].matkul = prakIndex;
+                                listPraktikum[mingguIndex][hariIndex - 1][ruangIndex - 1].group = groupIndex;
                             }
                         }
                     }
@@ -306,10 +307,10 @@ int getMingguIndex(char *str)
     }
     else
     {
-        index = 0;
+        index = -2;
         if (atoi(str) > 2 && atoi(str) < 16)
         {
-            index = atoi(str) - 2;
+            index = atoi(str) - 3;
         }
     }
     return index;
