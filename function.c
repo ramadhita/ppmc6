@@ -377,3 +377,27 @@ int getPrakIndex(char *str)
     return index;
 }
 
+//FUNGSI TAMBAHAN
+int getHariIndex2(char* str){
+  switch (str)
+    {
+    case "Senin":
+        return 0;
+        break;
+    case "Selasa":
+        return 1;
+        break;
+    case "Rabu":
+        return 2;
+        break;
+    case "Kamis":
+        return 3;
+        break;
+    case "Jumat":
+        return 4;
+        break;
+    default:
+        return -1;
+        break;
+    }
+}
