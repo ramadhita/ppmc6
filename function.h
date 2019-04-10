@@ -15,6 +15,7 @@ char* getGroup(int matkul, int index);
 char* getAsisten(char as[2]);
 char* getMatkul(int index);
 char* getHari(int index);
+void assignPraktikum(praktikum listPraktikum[12][5][4]);
 
 int getIndexAsisten (char str);
 int getIndexMinggu (char *str);
