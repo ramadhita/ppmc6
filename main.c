@@ -100,6 +100,7 @@ int main()
 				else if(pilihan2 == 7)
 				{
 					printf("Fungsi rule_check \n");
+					ruleCheck();
 				}
 				else if(pilihan2 == 8)
 				{
