@@ -45,7 +45,7 @@ int main()
 			if(pilihan1 == 1)
 			{
 				printf("Fungsi new_project \n");
-				//buatProyek();
+				buatProyek();
 			}
 			else if(pilihan1 == 2)
 			{
@@ -75,6 +75,7 @@ int main()
 				else if(pilihan2 == 2)
 				{
 					printf("Fungsi jadwal_manual \n");
+					assignPraktikum(praktikum listPraktikum[12][5][4]);
 				}
 				else if(pilihan2 == 3)
 				{
@@ -89,10 +90,12 @@ int main()
 				else if(pilihan2 == 5)
 				{
 					printf("Fungsi jadwal_auto \n");
+					printf("Belum Tersedia\n");
 				}
 				else if(pilihan2 == 6)
 				{
 					printf("Fungsi asisten_auto \n");
+					printf("Belum Tersedia\n");
 				}
 				else if(pilihan2 == 7)
 				{
