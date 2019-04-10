@@ -16,6 +16,13 @@ char* getAsisten(char as[2]);
 char* getMatkul(int index);
 char* getHari(int index);
 void assignPraktikum(praktikum listPraktikum[12][5][4]);
+int getRuangIndex (char *str);
+int getHariIndex (int prak, int group, char *str);
+int getMingguIndex(char *str);
+int getGroupIndex(int prak, char *str);
+int getPrakIndex(char *str);
+
+int getHariIndex2(char* str)
 
 int getIndexAsisten (char str);
 int getIndexMinggu (char *str);
