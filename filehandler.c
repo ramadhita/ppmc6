@@ -1,5 +1,11 @@
 #include "filehandler.h"
 
+void buatProyek()
+{
+	FILE *fptr;
+	filepointer = fopen("Jadwal_Praktikum_Semester_2_rombongan.csv","w+");
+}
+
 void loadPraktikum(praktikum listPraktikum[12][5][4])
 {
     FILE *filePointer;
