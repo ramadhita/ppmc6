@@ -1,0 +1,97 @@
+void loadAsisten(char listAsisten[12][4][4][2]){
+FILE *filePointer;
+    int  i, j, k, line, minggu, hari;
+    char asisten1, asisten2;
+    char c;
+    char gn[7], gi[3];
+    char str[512], *tok;
+    //hapusHeader(); //hapus bagian 2 line awal (header)
+    //validasi file eksternal
+    if(access("Jadwal_Praktikum_Semester_2_asisten.csv", F_OK) != -1)
+    {
+        filePointer = fopen("Jadwal_Praktikum_Semester_2_asisten.csv", "r");
+        // filePointer = fopen("Jadwal_Praktikum_Semester_2_rombongan.csv", "r");
+        i = 0;
+        j = 0;
+        k = 0;
+        line = 0;
+        strcpy(str, "");
+        while ((c = fgetc(filePointer)) != EOF)
+        {
+            // printf("%c", c);
+            if (c == '\n')
+            {
+
+                str[i] = '\0';
+                // printf(" Line: %s\n", str);
+                line += 1;
+                if (line > 2)
+                {
+                    j = 0; // Token delimiter count
+                    tok = strtok(str, "|");
+                    while(tok != NULL)
+                    {
+                        // printf("Token %d : %s",k, tok);
+
+                        switch(j)
+                        {
+                            case 0:
+                                minggu = getMingguIndex(tok);
+                                // printf("Minggu %d - ", minggu);
+                            break;
+                            case 1:
+                                hari = getHariIndex(1, 1, tok);
+                                // printf("%d - ", hari);
+                                for (k = 0; k < 4; k++)
+                                {
+                                    listAsisten[minggu][hari-1][k][0] = ' ';
+                                    listAsisten[minggu][hari-1][k][1] = ' ';
+                                }
+
+                            break;
+                            default:
+                                if(strlen(tok) == 3){
+                                    for(i=0; i<1; i++){
+                                        gn[i]=tok[i];
+                                    } //bekas pake dari loadPraktikum, gak perlu iterasi
+                                    gn[1]='\0';
+                                    printf("%s\n", gn);
+                                    for(i=2; i<3; i++){
+                                        gi[i-2]=tok[i];
+                                    } //bekas pake, gak perlu iterasi
+                                    gi[1]='\0';
+                                    printf("%s\n", gi);
+                                }
+                                asisten1 = gn[0];
+                                asisten2 = gi[0];
+                                listAsisten[minggu][hari-1][j][0] = asisten1;
+                                listAsisten[minggu][hari-1][j][1] = asisten2;
+                                // printf("%s", gn);
+                            break;
+                        }
+                        j += 1;
+                        tok = strtok(NULL, "|");
+
+                    }
+                    // printf("\n");
+                }
+                i = 0;
+                // printf("Line %d\n", i);
+            }
+            else
+            {
+                str[i] = c;
+                i += 1;
+                // printf("%c", c);
+
+            }
+        }
+        //printf("File tidak tersedia.");
+        fclose(filePointer);
+
+    }
+    else
+    {
+       printf("File does not exist.");
+    }
+}
