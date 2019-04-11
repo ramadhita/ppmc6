@@ -421,7 +421,6 @@ void assignPraktikum(praktikum listPraktikum[12][5][4])
                 {
                     printf("Inputan salah. Pastikan minggu sesuai rentang.\n");
                     printf("Minggu ke: ");
-                    //getchar();
                     gets(input);
                 }
                 mingguIndex = getMingguIndex(input);
@@ -434,7 +433,6 @@ void assignPraktikum(praktikum listPraktikum[12][5][4])
                         printf("Inputan salah. Pastikan hari sesuai rentang.\n");
                         printf("Hari: ");
                         gets(input);
-                        printf("%s:", input);
                     }
                     hariIndex = getHariIndex(prakIndex, groupIndex, input);
                     if (hariIndex != -1)
