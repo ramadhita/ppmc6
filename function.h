@@ -2,7 +2,7 @@
 //                      [ Source Code ]
 //
 // Institution       : Institut Teknologi Bandung
-// Name              : 
+// Name              :
 // Module            : Tugas Besar
 // Problem           : header file function
 // File Name         : function.h
@@ -14,7 +14,7 @@
 //		3.  Kevin Sutardi / 13217088
 //		4.  Ramadhita Umitaibatin / 18317008
 //		5.  Muhammad Harun Al Rasyid / 18317009
-// 
+//
 //***********************************************************//
 
 #ifndef FUNCTION_H
@@ -30,26 +30,32 @@ typedef struct Praktikum
     int group;
 } praktikum;
 
+typedef struct Asisten
+{
+    char nama[10];
+    int prak[3];
+    int hari[5];
+} asisten;
+
+
 char* getGroup(int matkul, int index);
 char* getAsisten(char as[2]);
 char* getMatkul(int index);
 char* getHari(int index);
-void assignPraktikum(praktikum listPraktikum[12][5][4]);
+
 int getRuangIndex (char *str);
 int getHariIndex (int prak, int group, char *str);
 int getMingguIndex(char *str);
 int getGroupIndex(int prak, char *str);
 int getPrakIndex(char *str);
-
-int getHariIndex2(char* str)
-
 int getIndexAsisten (char str);
-int getIndexMinggu (char *str);
-int getIndexLab (char *str);
-int getIndexHari (char *str);
-void AssignAsisten(char listAsisten[12][5][4][2], praktikum listPraktikum[12][5][4]);
 
-int tampilkanSchedule ();
-int tampilkanAsisten ();
 
+void viewSchedule (praktikum listPraktikum[12][5][4]);
+void viewAsisten (char listAsisten[12][5][4][2]);
+
+void assignPraktikum(praktikum listPraktikum[12][5][4]);
+void assignAsisten(asisten listData[14], char listAsisten[12][5][4][2], praktikum listPraktikum[12][5][4]);
+void autoPraktikum(praktikum listPraktikum[12][5][4]);
+void autoAsisten(asisten listData[14], char listAsisten[12][5][4][2], praktikum listPraktikum[12][5][4]);
 #endif // FUNCTION_H

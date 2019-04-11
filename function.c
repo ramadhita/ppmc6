@@ -2,7 +2,7 @@
 //                      [ Source Code ]
 //
 // Institution       : Institut Teknologi Bandung
-// Name              : 
+// Name              :
 // Module            : Tugas Besar
 // Problem           : function
 // File Name         : function.c
@@ -14,7 +14,7 @@
 //		3.  Kevin Sutardi / 13217088
 //		4.  Ramadhita Umitaibatin / 18317008
 //		5.  Muhammad Harun Al Rasyid / 18317009
-// 
+//
 //***********************************************************//
 
 #include "function.h"
@@ -30,7 +30,6 @@ char* getGroup(int matkul, int index)
     {
         case 1:
             group[0] = (char)(64 + (int)(ceil((double)index / 2)));
-            //printf("Letter: %c *", group[0]);
             group[1] = (char)(50 - index % 2);
             break;
         case 2:
@@ -63,20 +62,39 @@ char* getGroup(int matkul, int index)
 
 char* getAsisten(char list[2])
 {
-    if ((int)list[0] < 65 || (int)list[0]>73)
+    char *asisten;
+    // Cek apakah keduanya null
+    if (list[0] == '\0' && list[1] == '\0')
     {
-        return "";
+        asisten = malloc(2*sizeof(char));
+        asisten[0] = ' ';
+        asisten[1] = '\0';
     }
     else
     {
-        char *asisten;
-        asisten = malloc(3*sizeof(char));
-        asisten[0] = list[0];
+        asisten = malloc(4*sizeof(char));
+        if (list[0] == '\0')
+        {
+            asisten[0] = ' ';
+        }
+        else
+        {
+            asisten[0] = list[0];
+        }
+
+        if (list[1] == '\0')
+        {
+            asisten[2] = ' ';
+        }
+        else
+        {
+            asisten[2] = list[1];
+        }
+
         asisten[1] = ',';
-        asisten[2] = list[1];
         asisten[3] ='\0';
-        return asisten;
     }
+    return asisten;
 }
 
 char* getMatkul(int index)
@@ -122,155 +140,6 @@ char* getHari(int index)
         break;
     }
 }
-void assignPraktikum(praktikum listPraktikum[12][5][4])
-{
-    char input[7];
-    int i, size, prakIndex, groupIndex, mingguIndex, hariIndex, ruangIndex;
-    printf("[Mode Schedule]\nIsi `q` atau `Q` untuk kembali ke menu\n");
-    while(prakIndex != -1 && groupIndex != -1 && mingguIndex != -1 && hariIndex != -1 && ruangIndex != -1)
-    {
-        printf("Pilih Kode Praktikum (EL2205, EL2208, EB2200): ");
-        gets(input);
-        while(getPrakIndex(input) == 0)
-        {
-            printf("Inputan salah. Pastikan kode matkul sesuai daftar.\n");
-            printf("Pilih Kode Praktikum (EL2205, EL2208, EB2200): ");
-            gets(input);
-        }
-        prakIndex = getPrakIndex(input);
-        if (prakIndex != -1)
-        {
-            switch(prakIndex)
-            {
-                case 1:
-                    printf("Rombongan (A1,A2,B1,B2,C1, atau C2): ");
-                    break;
-                case 2:
-                    printf("Rombongan (A1, A2, A3, B1, B2, B3, atau C): ");
-                    break;
-                case 3:
-                    printf("Rombongan (A atau B): ");
-                    break;
-            }
-            gets(input);
-            while(getGroupIndex(prakIndex, input) == 0)
-            {
-                printf("Inputan salah. Pastikan rombongan sesuai daftar.\n");
-                switch(prakIndex)
-                {
-                case 1:
-                    printf("Rombongan (A1,A2,B1,B2,C1, atau C2): ");
-                    break;
-                case 2:
-                    printf("Rombongan (A1, A2, A3, B1, B2, B3, atau C): ");
-                    break;
-                case 3:
-                    printf("Rombongan (A atau B): ");
-                    break;
-                }
-                gets(input);
-            }
-            groupIndex = getGroupIndex(prakIndex, input);
-
-            if (groupIndex != -1)
-            {
-                printf("Minggu ke: ");
-                gets(input);
-                while(getMingguIndex(input) == -2)
-                {
-                    printf("Inputan salah. Pastikan minggu sesuai rentang.\n");
-                    printf("Minggu ke: ");
-                    gets(input);
-                }
-                mingguIndex = getMingguIndex(input);
-                if (mingguIndex != -1)
-                {
-                    printf("Hari: ");
-                    gets(input);
-                    while(getHariIndex(prakIndex, groupIndex, input) == 0)
-                    {
-                        printf("Inputan salah. Pastikan hari sesuai rentang.\n");
-                        printf("Hari: ");
-                        gets(input);
-                    }
-                    hariIndex = getHariIndex(prakIndex, groupIndex, input);
-                    if (hariIndex != -1)
-                    {
-                        if (prakIndex == 1)
-                        {
-                            size = 2;
-                            for (i = 0; i < size; i++)
-                            {
-                                printf("Ruangan %d: ", i + 1);
-                                gets(input);
-                                while(getRuangIndex(input) == 0)
-                                {
-                                    printf("Input salah. Pastikan lab terdaftar.\n");
-                                    printf("Ruangan %d: ", i + 1);
-                                    gets(input);
-                                }
-                                ruangIndex =  getRuangIndex(input);
-                                if (ruangIndex != -1)
-                                {
-                                    listPraktikum[mingguIndex][hariIndex - 1][ruangIndex - 1].matkul = prakIndex;
-                                    listPraktikum[mingguIndex][hariIndex - 1][ruangIndex - 1].group = groupIndex;
-                                }
-                                else
-                                {
-                                    break;
-                                }
-                            }
-                        }
-                        else if (prakIndex == 2)
-                        {
-
-                            size = 3;
-                            for (i = 0; i < size; i++)
-                            {
-                                printf("Ruangan %d: ", i + 1);
-                                gets(input);
-                                while(getRuangIndex(input) == 0)
-                                {
-                                    printf("Input salah. Pastikan lab terdaftar.\n");
-                                    printf("Ruangan %d: ", i + 1);
-                                    gets(input);
-                                }
-                                ruangIndex =  getRuangIndex(input);
-                                if (ruangIndex != -1)
-                                {
-                                    listPraktikum[mingguIndex][hariIndex - 1][ruangIndex - 1].matkul = prakIndex;
-                                    listPraktikum[mingguIndex][hariIndex - 1][ruangIndex - 1].group = groupIndex;
-                                }
-                                else
-                                {
-                                    break;
-                                }
-                            }
-                        }
-
-                        else
-                        {
-                            printf("Ruangan: ");
-                            gets(input);
-                            while(getRuangIndex(input) == 0)
-                            {
-                                printf("Input salah. Pastikan lab terdaftar.\n");
-                                printf("Ruangan: ");
-                                gets(input);
-                            }
-                            ruangIndex =  getRuangIndex(input);
-                            if (ruangIndex != -1)
-                            {
-                                listPraktikum[mingguIndex][hariIndex - 1][ruangIndex - 1].matkul = prakIndex;
-                                listPraktikum[mingguIndex][hariIndex - 1][ruangIndex - 1].group = groupIndex;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
 
 int getRuangIndex (char *str)
 {
@@ -310,7 +179,7 @@ int getHariIndex (int prak, int group, char *str)
     {
         index = 0;
     }
-    if (index != 3 && group == 7)
+    if (prak == 2 && index != 3 && group == 7)
     {
         index = 0;
     }
@@ -354,6 +223,9 @@ int getGroupIndex(int prak, char *str)
             else if (strcmp("B2", str) == 0) {index = 4;}
             else if (strcmp("C1", str) == 0) {index = 5;}
             else if (strcmp("C2", str) == 0) {index = 6;}
+            else if (strcmp("A", str) == 0) {index = 7;}
+            else if (strcmp("B", str) == 0) {index = 8;}
+            else if (strcmp("C", str) == 0) {index = 9;}
             break;
         case 2:
             if (strcmp("C", str) == 0){index = 7;}
@@ -363,6 +235,8 @@ int getGroupIndex(int prak, char *str)
             else if (strcmp("B1", str) == 0) {index = 4;}
             else if (strcmp("B2", str) == 0) {index = 5;}
             else if (strcmp("B3", str) == 0) {index = 6;}
+            else if (strcmp("A", str) == 0) {index = 8;}
+            else if (strcmp("B", str) == 0) {index = 9;}
             break;
         case 3:
             if (strcmp("A", str) == 0){index = 1;}
@@ -397,486 +271,464 @@ int getPrakIndex(char *str)
 }
 
 // ---------------------------------------- FUNGSI TAMBAHAN
-int getHariIndex2(char* str){
-  switch (str)
-    {
-    case "Senin":
-        return 0;
-        break;
-    case "Selasa":
-        return 1;
-        break;
-    case "Rabu":
-        return 2;
-        break;
-    case "Kamis":
-        return 3;
-        break;
-    case "Jumat":
-        return 4;
-        break;
-    default:
-        return -1;
-        break;
-    }
-}
-
-// ------------------------- FUNGSI TAMPILKAN -----------------------
-int tampilkanSchedule (){
-	int i, j, k;
-	printf ("\n\n\t|--------------------|----------|----------|----------|----------|\n");
-	printf ("\t|   Ruang Praktikum   |   Lab 1  |   Lab 2  |   Lab 3  |    LSS   |\n");
-	printf ("\t|---------------------|----------|----------|----------|----------|\n");
-	printf ("\t|  Minggu  |   Hari   |----------|----------|----------|----------|\n");
-	printf ("\t|----------|----------|----------|----------|----------|----------|\n");
-	for (i=0 ; i<12 ; i++)
-		{
-			for (j=0 ; j<5 ; j++)
-			{
-				printf ("\t|\t%d\t|", [i+3]);
-				printf ("\t%s\t|", getHari(j));
-				for (k=1 ; k=4 ; k++)
-				{
-					printf ("\t%s\t|", listPraktikum[i][j][k]);
-				}
-				printf ("\n");
-			}
-			printf ("\t|-----------------------------------------------------------------|\n");
-		}
-	}
-
-int tampilkanAsisten (){
-	int i, j, k, l;
-	printf ("\n\n\t|--------------------|----------|----------|----------|----------|\n");
-	printf ("\t|   Ruang Praktikum   |   Lab 1  |   Lab 2  |   Lab 3  |    LSS   |\n");
-	printf ("\t|---------------------|----------|----------|----------|----------|\n");
-	printf ("\t|  Minggu  |   Hari   |----------|----------|----------|----------|\n");
-	printf ("\t|----------|----------|----------|----------|----------|----------|\n");
-	for (i=0 ; i<12 ; i++)
-		{
-			for (j=0 ; j<5 ; j++)
-			{
-				printf ("\t|\t%d\t|", [i+3]);
-				printf ("\t%s\t|", getHari(j));
-				for (k=1 ; k=4 ; k++)
-				{
-					for (l=1 ; l=14 ; l++)
-					{
-						printf ("\t%s\t|", listAsisten[i][j][k][l]);
-					}
-				}
-				printf ("\n");
-			}
-			printf ("\t|-----------------------------------------------------------------|\n");
-		}
-	}
-
-
-/*
-Program Input Asisten Manual
-*/
-
 
 int getIndexAsisten (char str)
 {
-	int index;
-	if (str=='q' || str=='Q') index =-1;
-	else if ( str=='A' || str =='B' || str =='C' || str =='D' || str =='E' || str =='F' || str =='G' || str =='H' || str =='I' || str =='J' )
-		index = 1;
-	else index = 0;
+	int index = 0;
+	if (str=='q' || str=='Q')
+    {
+        index = -1;
+    }
+	else if ( (int)str > 64 && (int)str < 79 )
+    {
+        index = ((int)str) - 64;
+    }
 	return index;
 }
 
-int getIndexMinggu (char *str)
+
+
+// ------------------------- FUNGSI TAMPILKAN -----------------------
+void viewSchedule (praktikum listPraktikum[12][5][4])
 {
-	int index;
-	if (strcmp("Q",str)==0 || strcmp("q",str)==0)
-		index =-1;
-	else
+    int i, j, k;
+	printf ("\n\n\t|------------------------|-----------|-----------|-----------|-----------|\n");
+	printf ("\t|   Ruang Praktikum      |   Lab 1   |   Lab 2   |   Lab 3   |    LSS    |\n");
+	printf ("\t|------------------------|-----------|-----------|-----------|-----------|\n");
+	printf ("\t|  Minggu |      Hari    |-----------|-----------|-----------|-----------|\n");
+	printf ("\t|---------|--------------|-----------|-----------|-----------|-----------|\n");
+	for (i = 0 ; i < 12 ; i++)
 	{
-		index=-2;
-		if (atoi(str)>2 && atoi(str)<15)
-		{
-			index = atoi(str)-3;
-		}
-	}
-	return index;
+        for (j = 0 ; j < 5 ; j++)
+        {
+            if(i+3 < 10){
+                printf ("\t|    %d    |", i+3);
+            }
+            else if (i+3 >= 10){
+                printf ("\t|    %d   |", i+3);
+            }
+            printf ("\t%s\t |", getHari(j + 1));
+            for (k = 0 ; k < 4 ; k++)
+            {
+                if(listPraktikum[i][j][k].matkul == 0){
+                    printf("           |");
+                } else {
+                printf (" %s%s |", getMatkul(listPraktikum[i][j][k].matkul), getGroup(listPraktikum[i][j][k].matkul, listPraktikum[i][j][k].group));
+                }
+            }
+            printf ("\n");
+        }
+        printf ("\t|------------------------------------------------------------------------|\n");
+    }
 }
 
-int getIndexLab (char *str)
+void viewAsisten (char listAsisten[12][5][4][2])
 {
-	int index;
-	if (strcmp("Q",str)==0 || strcmp("q",str)==0)
-		index =-1;
-	else
+	int i, j, k;
+	printf ("\n\n\t|-----------------------|----------|----------|----------|----------|\n");
+	printf ("\t|   Ruang Praktikum     |   Lab 1  |   Lab 2  |   Lab 3  |    LSS   |\n");
+	printf ("\t|-----------------------|----------|----------|----------|----------|\n");
+	printf ("\t|  Minggu  |   Hari     |----------|----------|----------|----------|\n");
+	printf ("\t|----------|------------|----------|----------|----------|----------|\n");
+	for (i=0 ; i<12 ; i++)
 	{
-		index=-2;
-		if (strcmp("LAB1", str)==0) index=0;
-		else if (strcmp("LAB2", str)==0) index=1;
-		else if (strcmp("LAB3",str)==0) index=2;
-		else if (strcmp("LSS", str)==0) index=3;
-	}
-	return index;
+        for (j=0 ; j<5 ; j++)
+        {
+            if(i+3 < 10){
+                printf ("\t|    %d     |", i+3);
+            }
+            else if (i+3 >= 10){
+                printf ("\t|    %d    |", i+3);
+            }
+            printf ("\t%s\t|", getHari(j+1));
+            for (k = 0 ; k < 4 ; k++)
+            {
+                if (strlen(getAsisten(listAsisten[i][j][k])) == 3){
+                printf ("   %s    |", getAsisten(listAsisten[i][j][k]));
+                }
+                else {
+                printf ("          |");
+                }
+            }
+            printf ("\n");
+        }
+        printf ("\t|-------------------------------------------------------------------|\n");
+    }
 }
 
-int getIndexHari (char *str)
+void assignPraktikum(praktikum listPraktikum[12][5][4])
 {
-	int index;
-	if (strcmp("Q",str)==0 || strcmp("q",str)==0)
-		index =-1;
-	else
-	{
-		index=-2;
-		if (strcmp("Senin", str)==0) index=0;
-		else if (strcmp("Selasa", str)==0) index=1;
-		else if (strcmp("Rabu",str)==0) index=2;
-		else if (strcmp("Kamis", str)==0) index=3;
-		else if (strcmp("Jumat", str)==0) index=4;
-	}
-	return index;
+    char input[7];
+    int i, p, t, size, prakIndex, groupIndex, mingguIndex, hariIndex, ruangIndex;
+    t = 0;
+    printf("[Mode Schedule]\nIsi `q` atau `Q` untuk kembali ke menu\n");
+    strcpy(input, "");
+    while(prakIndex != -1 && groupIndex != -1 && mingguIndex != -1 && hariIndex != -1 && ruangIndex != -1)
+    {
+        printf("Pilih Kode Praktikum (EL2205, EL2208, EB2200): ");
+        if ((int)input[0] != 76)
+        {
+            getchar();
+        }
+        gets(input);
+        while(getPrakIndex(input) == 0)
+        {
+            printf("Inputan salah. Pastikan kode matkul sesuai daftar.\n");
+            printf("Pilih Kode Praktikum (EL2205, EL2208, EB2200): ");
+            gets(input);
+        }
+        prakIndex = getPrakIndex(input);
+        if (prakIndex != -1)
+        {
+            switch(prakIndex)
+            {
+                case 1:
+                    printf("Rombongan (A1,A2,B1,B2,C1, atau C2): ");
+                    break;
+                case 2:
+                    printf("Rombongan (A1, A2, A3, B1, B2, B3, atau C): ");
+                    break;
+                case 3:
+                    printf("Rombongan (A atau B): ");
+                    break;
+            }
+            gets(input);
+
+            while(getGroupIndex(prakIndex, input) == 0)
+            {
+                printf("Inputan salah. Pastikan rombongan sesuai daftar.\n");
+                switch(prakIndex)
+                {
+                case 1:
+                    printf("Rombongan (A1,A2,B1,B2,C1, atau C2): ");
+                    break;
+                case 2:
+                    printf("Rombongan (A1, A2, A3, B1, B2, B3, atau C): ");
+                    break;
+                case 3:
+                    printf("Rombongan (A atau B): ");
+                    break;
+                }
+                gets(input);
+            }
+            groupIndex = getGroupIndex(prakIndex, input);
+
+            if (groupIndex != -1)
+            {
+                printf("Minggu ke: ");
+                gets(input);
+                while(getMingguIndex(input) == -2)
+                {
+                    printf("Inputan salah. Pastikan minggu sesuai rentang.\n");
+                    printf("Minggu ke: ");
+                    //getchar();
+                    gets(input);
+                }
+                mingguIndex = getMingguIndex(input);
+                if (mingguIndex != -1)
+                {
+                    printf("Hari: ");
+                    gets(input);
+                    while(getHariIndex(prakIndex, groupIndex, input) == 0)
+                    {
+                        printf("Inputan salah. Pastikan hari sesuai rentang.\n");
+                        printf("Hari: ");
+                        gets(input);
+                        printf("%s:", input);
+                    }
+                    hariIndex = getHariIndex(prakIndex, groupIndex, input);
+                    if (hariIndex != -1)
+                    {
+                        if (prakIndex == 1)
+                        {
+
+                            if (groupIndex > 6)
+                            {
+                                size = 2;
+                                for (i = 0; i < size; i++)
+                                {
+                                    printf("Ruangan %d: ", i + 1);
+                                    gets(input);
+                                    while(getRuangIndex(input) == 0)
+                                    {
+                                        printf("Input salah. Pastikan lab terdaftar.\n");
+                                        printf("Ruangan %d: ", i + 1);
+                                        gets(input);
+                                    }
+                                    ruangIndex =  getRuangIndex(input);
+                                    if (ruangIndex != -1)
+                                    {
+                                        t = 0;
+                                        for (p = 0; p < 4; p ++)
+                                        {
+                                            if (listPraktikum[mingguIndex][hariIndex - 1][p].matkul == 2 && listPraktikum[mingguIndex][hariIndex - 1][p].group != 7)
+                                            {
+                                                t = 1;
+                                            }
+                                        }
+                                        if (t == 0)
+                                        {
+                                            listPraktikum[mingguIndex][hariIndex - 1][ruangIndex - 1].matkul = prakIndex;
+                                            listPraktikum[mingguIndex][hariIndex - 1][ruangIndex - 1].group = i + 1 + (groupIndex - 7)*2;
+                                        }
+                                        else
+                                        {
+                                            printf("Praktikum PMC & ELKA tidak boleh di hari yang sama.\n");
+                                            break;
+                                        }
+
+                                    }
+                                    else
+                                    {
+                                        break;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                printf("Ruangan: ");
+                                gets(input);
+                                while(getRuangIndex(input) == 0)
+                                {
+                                    printf("Input salah. Pastikan lab terdaftar.\n");
+                                    printf("Ruangan: ");
+                                    gets(input);
+                                }
+                                ruangIndex =  getRuangIndex(input);
+                                if (ruangIndex != -1)
+                                {
+                                    t = 0;
+                                    for (p = 0; p < 4; p ++)
+                                    {
+                                        if (listPraktikum[mingguIndex][hariIndex - 1][p].matkul == 2 && listPraktikum[mingguIndex][hariIndex - 1][p].group != 7)
+                                        {
+                                            t = 1;
+                                        }
+                                    }
+                                    if (t == 0)
+                                    {
+                                        listPraktikum[mingguIndex][hariIndex - 1][ruangIndex - 1].matkul = prakIndex;
+                                        listPraktikum[mingguIndex][hariIndex - 1][ruangIndex - 1].group = groupIndex;
+                                    }
+                                    else
+                                    {
+                                        printf("Praktikum PMC & ELKA tidak boleh di hari yang sama.\n");
+                                    }
+                                }
+                            }
+                        }
+                        else if (prakIndex == 2)
+                        {
+
+                            if (groupIndex > 7)
+                            {
+                                size = 3;
+                                for (i = 0; i < size; i++)
+                                {
+                                    printf("Ruangan %d: ", i + 1);
+                                    gets(input);
+                                    while(getRuangIndex(input) == 0)
+                                    {
+                                        printf("Input salah. Pastikan lab terdaftar.\n");
+                                        printf("Ruangan %d: ", i + 1);
+                                        gets(input);
+                                    }
+                                    ruangIndex =  getRuangIndex(input);
+                                    if (ruangIndex != -1)
+                                    {
+
+                                        t = 0;
+                                        for (p = 0; p < 4; p ++)
+                                        {
+                                            if (listPraktikum[mingguIndex][hariIndex - 1][p].matkul == 1)
+                                            {
+                                                t = 1;
+                                            }
+                                        }
+                                        if (t == 0)
+                                        {
+                                            listPraktikum[mingguIndex][hariIndex - 1][ruangIndex - 1].matkul = prakIndex;
+                                            listPraktikum[mingguIndex][hariIndex - 1][ruangIndex - 1].group = i + 1 + (groupIndex - 8)*3;
+                                        }
+                                        else
+                                        {
+                                            printf("Praktikum PMC & ELKA tidak boleh di hari yang sama.\n");
+                                        }
+
+                                    }
+                                    else
+                                    {
+                                        break;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                printf("Ruangan: ");
+                                gets(input);
+                                while(getRuangIndex(input) == 0)
+                                {
+                                    printf("Input salah. Pastikan lab terdaftar.\n");
+                                    printf("Ruangan: ");
+                                    gets(input);
+                                }
+                                ruangIndex =  getRuangIndex(input);
+                                if (ruangIndex != -1)
+                                {
+
+                                    t = 0;
+                                    for (p = 0; p < 4; p ++)
+                                    {
+                                        if (listPraktikum[mingguIndex][hariIndex - 1][p].matkul == 1 && groupIndex != 7)
+                                        {
+                                            t = 1;
+                                        }
+                                    }
+                                    if (t == 0)
+                                    {
+                                        listPraktikum[mingguIndex][hariIndex - 1][ruangIndex - 1].matkul = prakIndex;
+                                        listPraktikum[mingguIndex][hariIndex - 1][ruangIndex - 1].group = groupIndex;
+                                    }
+                                    else
+                                    {
+                                        printf("Praktikum PMC & ELKA tidak boleh di hari yang sama.\n");
+                                    }
+                                }
+                            }
+                        }
+
+                        else
+                        {
+                            printf("Ruangan: ");
+                            gets(input);
+                            while(getRuangIndex(input) == 0)
+                            {
+                                printf("Input salah. Pastikan lab terdaftar.\n");
+                                printf("Ruangan: ");
+                                gets(input);
+                            }
+                            ruangIndex =  getRuangIndex(input);
+                            if (ruangIndex != -1)
+                            {
+                                listPraktikum[mingguIndex][hariIndex - 1][ruangIndex - 1].matkul = prakIndex;
+                                listPraktikum[mingguIndex][hariIndex - 1][ruangIndex - 1].group = groupIndex;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
-void AssignAsisten(char listAsisten[12][5][4][2], praktikum listPraktikum[12][5][4])
+void assignAsisten(asisten listData[14], char listAsisten[12][5][4][2], praktikum listPraktikum[12][5][4])
 {
-	char input[8], Asis,nama[8];
-	int minggu=100, hari=100, lab=100, asis; //cant untuk mengetahui hari yang berhalangan, day untuk konversi hari ke integer
-	int i,j,k,l;
-	for (i = 0; i < 12; ++i)
-		for (j = 0; j < 5; ++j)
-			for (k = 0; k < 4; ++k)
-				for (l = 0; l < 2; ++l)
-					listAsisten[i][j][k][l]=' ';
+    int i, minggu, hari, lab, asis;
+    char *id, input[8], matkul[8];
 
 	printf("[Mode Assign Asisten]\n Isi 'q' atau 'Q' untuk kembali ke menu\n");
-	while (minggu!=-1 && lab!=-1 && hari!= -1 && asis!= -1)
+	strcpy(input, "");
+	while (minggu !=-1 && lab !=-1 && hari != -1 && asis != -1)
 	{
-		printf("Pilih Asisten (A-N): ");
-		scanf("%c",&Asis);
-		getchar();
-		while(getIndexAsisten(Asis) == 0)
+        printf("Pilih Asisten (A-N): ");
+		if ((int)input[0] != 76)
         {
-            printf("Inputan salah. Inisial Asisten tidak benar, ulangi masukan\n");
-            printf("Pilih Asisten (A-N): ");
-            scanf("%c",&Asis);
             getchar();
-        	if (getIndexAsisten(Asis)==-1) return;
         }
-        asis= getIndexAsisten(Asis);
-        if (asis==-1) return;
-		//Masukan Minggu
-		printf("Minggu: ");
 		gets(input);
-      while(getIndexMinggu(input) == -2)
-       {
-           printf("Inputan salah. Minggu dari 3-15. Ulangi masukan minggu\n");
-           printf("Minggu: ");
-           gets(input);
-     	   if (getIndexMinggu(input)==-1) return;
-       }
-      minggu=getIndexMinggu(input);
-      if (minggu==-1) return;
-      
-      //Masukan Hari
-		printf("Hari: ");
-		gets(input);
-      while(getIndexHari(input) == -2)
-       {
-           printf("Inputan salah. Hari Senin-Jumat. Ulangi masukan hari\n");
-           printf("Hari: ");
-           gets(input);
-     	   if (getIndexHari(input)==-1) return;
-       }
-      hari=getIndexHari(input);
-      if (hari==-1) return;
-      //Masukan ruang
-	  printf("Ruang: ");
-	  gets(input);
-      while(getIndexLab(input) == -2)
-       {
-           printf("Inputan salah. Pilih Ruang yang benar\n");
-           printf("Ruang: ");
-           gets(input);
-           lab=getIndexLab(input);
-     	   if (lab==-1) return;
-       }
-       lab=getIndexLab(input);
-       if (lab==-1) return;
-     
-     //BUAT MASUKIN CONSTRAINT
-     //Validasi apakah Asisten ini memenuhi syarat di hari dan lab tersebut
-      /*
-      	Index 1 = EL2205
-      	Index 2 = EL2208
-      	Index 3 = EB2200
-      */
-		switch(Asis)
-		{
-			case 'A': ;
-				strcpy(nama,"Amir");
-				if (hari == 2) //Amir gabisa hari Rabu, dan dia cuma asisten EL2205
-				{
-					printf("Jadwal Asisten Praktikum %s tidak sesuai (%s berhalangan di hari Rabu)\n",nama, nama);
-				} else
-				if (listPraktikum[minggu][hari][lab].matkul == 1)
-				{
-					if (listAsisten[minggu][hari][lab][0]==' ') //artinya dia masih null, belum ada asisten
-					listAsisten[minggu][hari][lab][0]='A'; //Masukkan ke list karena memenuhi, dan masih kosong
-					else if (listAsisten[minggu][hari][lab][1]==' ') //Artinya udah ada satu asisten disitu, jadi ditambahnya ke array kedua
-					listAsisten[minggu][hari][lab][1]='A';
-					else printf("Sudah ada dua asisten.\n");
-				//Kalo dua duanya nggak kosong, maka gabakal keisi
-				} else printf("Jadwal Asisten Praktikum %s tidak sesuai (tidak ada Rombongan EL2205)\n", nama);
-			break;
+		asis = getIndexAsisten(input[0]);
+        while(asis == 0)
+        {
+                printf("Inputan salah. Inisial Asisten tidak benar, ulangi masukan\n");
+                printf("Pilih Asisten (A-N): ");
+                gets(input);
+                asis = getIndexAsisten(input[0]);
+        }
+        if (asis != -1)
+        {
+            printf("Minggu: ");
+            gets(input);
+            minggu = getMingguIndex(input);
+            while(minggu == -2)
+            {
+                printf("Inputan salah. Minggu dari 3-15. Ulangi masukan minggu\n");
+                printf("Minggu: ");
+                gets(input);
+                minggu = getMingguIndex(input);
+            }
+            if (minggu != -1)
+            {
+                printf("Hari: ");
+                gets(input);
+                hari = getHariIndex(1, 1, input);
+                while(hari == 0)
+                {
+                    printf("Inputan salah. Hari Senin-Jumat. Ulangi masukan hari\n");
+                    printf("Hari: ");
+                    gets(input);
+                    hari = getHariIndex(1, 1, input);
+                }
+                if (hari != -1)
+                {
+                    printf("Ruang: ");
+                    gets(input);
+                    lab = getRuangIndex(input);
+                    while(lab == 0)
+                    {
+                        printf("Inputan salah. Pilih Ruang yang benar\n");
+                        printf("Ruang: ");
+                        gets(input);
+                        lab = getRuangIndex(input);
+                    }
+                    if (lab != -1)
+                    {
+                        if (listData[asis - 1].hari[hari - 1] == 1)
+                        {
+                            printf("Jadwal Asisten Praktikum %s tidak sesuai (berhalangan di hari %s)\n\n", listData[asis - 1].nama, getHari(hari));
+                        }
+                        else if (listPraktikum[minggu][hari - 1][lab - 1].matkul == 0)
+                        {
 
-			case 'B': ;
-				strcpy(nama,"Budi");
-				if (hari == 0) //Amir gabisa hari Senin, dan dia cuma asisten EL2205
-				{
-					printf("Jadwal Asisten Praktikum %s tidak sesuai (%s berhalangan di hari Rabu)\n",nama, nama);
-				} else
-				if (listPraktikum[minggu][hari][lab].matkul == 1)
-				{
-					if (listAsisten[minggu][hari][lab][0]==' ') //artinya dia masih null, belum ada asisten
-					listAsisten[minggu][hari][lab][0]='B'; //Masukkan ke list karena memenuhi, dan masih kosong
-					else if (listAsisten[minggu][hari][lab][1]==' ') //Artinya udah ada satu asisten disitu, jadi ditambahnya ke array kedua
-					listAsisten[minggu][hari][lab][1]='B';
-					else printf("Sudah ada dua asisten.\n");
-				//Kalo dua duanya nggak kosong, maka gabakal keisi
-				} else printf("Jadwal Asisten Praktikum %s tidak sesuai (tidak ada Rombongan EL2205)\n", nama);
-			break;
-		
-			case 'C': ;
-				//Cici gabisa hari Selasa dan Rabu, dan dia cuma asisten EL2205
-				nstrcpy(nama,"Cici");
-				if (hari == 1) printf("Jadwal Asisten Praktikum %s tidak sesuai (%s berhalangan di hari Selasa)\n",nama, nama);
-				else if (hari ==2) printf("Jadwal Asisten Praktikum %s tidak sesuai (%s berhalangan di hari Rabu)\n",nama, nama);
-				else if (listPraktikum[minggu][hari][lab].matkul == 1)
-				{
-					if (listAsisten[minggu][hari][lab][0]==' ') //artinya dia masih null, belum ada asisten
-					listAsisten[minggu][hari][lab][0]='C'; //Masukkan ke list karena memenuhi, dan masih kosong
-					else if (listAsisten[minggu][hari][lab][1]==' ') //Artinya udah ada satu asisten disitu, jadi ditambahnya ke array kedua
-					listAsisten[minggu][hari][lab][1]='C';
-					else printf("Sudah ada dua asisten.\n");
-				//Kalo dua duanya nggak kosong, maka tidak akan ada yang terisi
-				} else printf("Jadwal Asisten Praktikum %s tidak sesuai (tidak ada Rombongan EL2205)\n", nama);
-			break;
-		
-			case 'D': ;
-				strcpy(nama,"Doni");
-				if (hari == 1) printf("Jadwal Asisten Praktikum %s tidak sesuai (%s berhalangan di hari Selasa)\n",nama, nama);
-				else if (hari ==2) printf("Jadwal Asisten Praktikum %s tidak sesuai (%s berhalangan di hari Rabu)\n",nama, nama);
-				else if (listPraktikum[minggu][hari][lab].matkul == 1)
-				{
-					if (listAsisten[minggu][hari][lab][0]==' ') //artinya dia masih null, belum ada asisten
-					listAsisten[minggu][hari][lab][0]='D'; //Masukkan ke list karena memenuhi, dan masih kosong
-					else if (listAsisten[minggu][hari][lab][1]==' ') //Artinya udah ada satu asisten disitu, jadi ditambahnya ke array kedua
-					listAsisten[minggu][hari][lab][1]='D';
-					else printf("Sudah ada dua asisten.\n");
-				//Kalo dua duanya nggak kosong, maka tidak akan ada yang terisi
-				} else printf("Jadwal Asisten Praktikum %s tidak sesuai (tidak ada Rombongan EL2205)\n", nama);
-			break;
-		
-			case 'E': ;
-				strcpy(nama,"Endang");
-				if (listPraktikum[minggu][hari][lab].matkul == 1)
-				{
-					if (listAsisten[minggu][hari][lab][0]==' ') //artinya dia masih null, belum ada asisten
-					listAsisten[minggu][hari][lab][0]='E'; //Masukkan ke list karena memenuhi, dan masih kosong
-					else if (listAsisten[minggu][hari][lab][1]==' ') //Artinya udah ada satu asisten disitu, jadi ditambahnya ke array kedua
-					listAsisten[minggu][hari][lab][1]='E';
-					else printf("Sudah ada dua asisten.\n");
-				//Kalo dua duanya nggak kosong, maka tidak akan ada yang terisi
-				} else if (listPraktikum[minggu][hari][lab].matkul == 2)
-				{
-					if (listAsisten[minggu][hari][lab][0]==' ') //artinya dia masih null, belum ada asisten
-					listAsisten[minggu][hari][lab][0]='E'; //Masukkan ke list karena memenuhi, dan masih kosong
-					else if (listAsisten[minggu][hari][lab][1]==' ') //Artinya udah ada satu asisten disitu, jadi ditambahnya ke array kedua
-					listAsisten[minggu][hari][lab][1]='E';
-					else printf("Sudah ada dua asisten.\n");
-				//Kalo dua duanya nggak kosong, maka tidak akan ada yang terisi
-				} else printf("Jadwal Asisten Praktikum %s tidak sesuai (tidak ada Rombongan EL2205 maupun EL2208)\n", nama);
-			break;
-			
-			case 'F': ;
-				strcpy(nama,"Fadel");
-				if (hari == 1) printf("Jadwal Asisten Praktikum %s tidak sesuai (%s berhalangan di hari Selasa)\n",nama, nama);
-				else if (listPraktikum[minggu][hari][lab].matkul == 1)
-				{
-					if (listAsisten[minggu][hari][lab][0]==' ') //artinya dia masih null, belum ada asisten
-					listAsisten[minggu][hari][lab][0]='F'; //Masukkan ke list karena memenuhi, dan masih kosong
-					else if (listAsisten[minggu][hari][lab][1]==' ') //Artinya udah ada satu asisten disitu, jadi ditambahnya ke array kedua
-					listAsisten[minggu][hari][lab][1]='F';
-					else printf("Sudah ada dua asisten.\n");
-				//Kalo dua duanya nggak kosong, maka tidak akan ada yang terisi
-				} else printf("Jadwal Asisten Praktikum %s tidak sesuai (tidak ada Rombongan EL2205)\n", nama);
-			break;
-			
-			case 'G': ;
-				strcpy(nama,"Gilang");
-				if (hari == 3) printf("Jadwal Asisten Praktikum %s tidak sesuai (%s berhalangan di hari Kamis)\n",nama, nama);
-				else if (listPraktikum[minggu][hari][lab].matkul == 1)
-				{
-					if (listAsisten[minggu][hari][lab][0]==' ') //artinya dia masih null, belum ada asisten
-					listAsisten[minggu][hari][lab][0]='G'; //Masukkan ke list karena memenuhi, dan masih kosong
-					else if (listAsisten[minggu][hari][lab][1]==' ') //Artinya udah ada satu asisten disitu, jadi ditambahnya ke array kedua
-					listAsisten[minggu][hari][lab][1]='G';
-					else printf("Sudah ada dua asisten.\n");
-				//Kalo dua duanya nggak kosong, maka tidak akan ada yang terisi
-				} else if (listPraktikum[minggu][hari][lab].matkul == 2)
-				{
-					if (listAsisten[minggu][hari][lab][0]==' ') //artinya dia masih null, belum ada asisten
-					listAsisten[minggu][hari][lab][0]='G'; //Masukkan ke list karena memenuhi, dan masih kosong
-					else if (listAsisten[minggu][hari][lab][1]==' ') //Artinya udah ada satu asisten disitu, jadi ditambahnya ke array kedua
-					listAsisten[minggu][hari][lab][1]='G';
-					else printf("Sudah ada dua asisten.\n");
-				//Kalo dua duanya nggak kosong, maka tidak akan ada yang terisi
-				} else printf("Jadwal Asisten Praktikum %s tidak sesuai (tidak ada Rombongan EL2205 maupun EB2200)\n", nama);
-			break;
+                            printf("Jadwal Asisten Praktikum %s tidak sesuai (tidak ada praktikum pada ruangan)\n\n", listData[asis - 1].nama);
+                        }
+                        else if (listData[asis-1].prak[listPraktikum[minggu][hari - 1][lab - 1].matkul-1] != 1)
+                        {
+                            for (i = 0; i < 3; i++)
+                            {
+                                if (listData[asis-1].prak[i] == 1)
+                                {
+                                    strcpy(matkul, getMatkul(i + 1));
+                                    matkul[6] = '\0';
+                                    printf("Jadwal Asisten Praktikum %s tidak sesuai (tidak ada Rombongan %s)\n", listData[asis - 1].nama, matkul);
+                                }
+                            }
+                            printf("\n");
 
-			case 'H': ;
-				strcpy(nama,"Hero");
-				if (hari == 3) //Amir gabisa hari Senin, dan dia cuma asisten EL2205
-				{
-					printf("Jadwal Asisten Praktikum %s tidak sesuai (%s berhalangan di hari Kamis)\n",nama, nama);
-				} else
-				if (listPraktikum[minggu][hari][lab].matkul == 2)
-				{
-					if (listAsisten[minggu][hari][lab][0]==' ') //artinya dia masih null, belum ada asisten
-					listAsisten[minggu][hari][lab][0]='H'; //Masukkan ke list karena memenuhi, dan masih kosong
-					else if (listAsisten[minggu][hari][lab][1]==' ') //Artinya udah ada satu asisten disitu, jadi ditambahnya ke array kedua
-					listAsisten[minggu][hari][lab][1]='H';
-					else printf("Sudah ada dua asisten.\n");
-				//Kalo dua duanya nggak kosong, maka gabakal keisi
-				} else printf("Jadwal Asisten Praktikum %s tidak sesuai (tidak ada Rombongan EL2205)\n", nama);
-			break;
-			
-			case 'I': ;
-				strcpy(nama,"Intan");
-				if (hari == 2) printf("Jadwal Asisten Praktikum %s tidak sesuai (%s berhalangan di hari Rabu)\n",nama, nama);
-				else if (listPraktikum[minggu][hari][lab].matkul == 1)
-				{
-					if (listAsisten[minggu][hari][lab][0]==' ') //artinya dia masih null, belum ada asisten
-					listAsisten[minggu][hari][lab][0]='I'; //Masukkan ke list karena memenuhi, dan masih kosong
-					else if (listAsisten[minggu][hari][lab][1]==' ') //Artinya udah ada satu asisten disitu, jadi ditambahnya ke array kedua
-					listAsisten[minggu][hari][lab][1]='I';
-					else printf("Sudah ada dua asisten.\n");
-				//Kalo dua duanya nggak kosong, maka tidak akan ada yang terisi
-				} else if (listPraktikum[minggu][hari][lab].matkul == 2)
-				{
-					if (listAsisten[minggu][hari][lab][0]==' ') //artinya dia masih null, belum ada asisten
-					listAsisten[minggu][hari][lab][0]='I'; //Masukkan ke list karena memenuhi, dan masih kosong
-					else if (listAsisten[minggu][hari][lab][1]==' ') //Artinya udah ada satu asisten disitu, jadi ditambahnya ke array kedua
-					listAsisten[minggu][hari][lab][1]='I';
-					else printf("Sudah ada dua asisten.\n");
-				//Kalo dua duanya nggak kosong, maka tidak akan ada yang terisi
-				} else if (listPraktikum[minggu][hari][lab].matkul == 3)
-				{
-					if (listAsisten[minggu][hari][lab][0]==' ') //artinya dia masih null, belum ada asisten
-					listAsisten[minggu][hari][lab][0]='I'; //Masukkan ke list karena memenuhi, dan masih kosong
-					else if (listAsisten[minggu][hari][lab][1]==' ') //Artinya udah ada satu asisten disitu, jadi ditambahnya ke array kedua
-					listAsisten[minggu][hari][lab][1]='I';
-					else printf("Sudah ada dua asisten.\n");
-				//Kalo dua duanya nggak kosong, maka tidak akan ada yang terisi
-				} 
-				else printf("Jadwal Asisten Praktikum %s tidak sesuai (tidak ada Rombongan EL2205, EL2208, maupun EB2200)\n", nama);
+                        }
+                        else
+                        {
+                            if (listAsisten[minggu][hari - 1][lab - 1][0] == '\0')
+                            {
+                                listAsisten[minggu][hari - 1][lab - 1][0] = listData[asis-1].nama[0];
+                            }
+                            else
+                            {
+                                if (listAsisten[minggu][hari - 1][lab - 1][1] == '\0')
+                                {
+                                    listAsisten[minggu][hari - 1][lab - 1][1] = listData[asis-1].nama[0];
+                                }
+                                else
+                                {
+                                    printf("Sudah ada dua asisten.\n\n");
+                                }
+                            }
+                        }
+                    }
 
-			break;
-			
-			case 'J': ;
-				strcpy(nama,"Joko");
-				if (hari == 4) //Amir gabisa hari Rabu, dan dia cuma asisten EL2205
-				{
-					printf("Jadwal Asisten Praktikum %s tidak sesuai (%s berhalangan di hari Jumat)\n",nama, nama);
-				} else
-				if (listPraktikum[minggu][hari][lab].matkul == 2)
-				{
-					if (listAsisten[minggu][hari][lab][0]==' ') //artinya dia masih null, belum ada asisten
-					listAsisten[minggu][hari][lab][0]='J'; //Masukkan ke list karena memenuhi, dan masih kosong
-					else if (listAsisten[minggu][hari][lab][1]==' ') //Artinya udah ada satu asisten disitu, jadi ditambahnya ke array kedua
-					listAsisten[minggu][hari][lab][1]='J';
-					else printf("Sudah ada dua asisten.\n");
-				//Kalo dua duanya nggak kosong, maka gabakal keisi
-				} else printf("Jadwal Asisten Praktikum %s tidak sesuai (tidak ada Rombongan EL2208)\n", nama);
-				
-			break;
-			
-			case 'K': ;
-				strcpy(nama,"Kiki");
-				if (hari == 4) printf("Jadwal Asisten Praktikum %s tidak sesuai (%s berhalangan di hari Jumat)\n",nama, nama);
-				else if (listPraktikum[minggu][hari][lab].matkul == 2)
-				{
-					if (listAsisten[minggu][hari][lab][0]==' ') //artinya dia masih null, belum ada asisten
-					listAsisten[minggu][hari][lab][0]='K'; //Masukkan ke list karena memenuhi, dan masih kosong
-					else if (listAsisten[minggu][hari][lab][1]==' ') //Artinya udah ada satu asisten disitu, jadi ditambahnya ke array kedua
-					listAsisten[minggu][hari][lab][1]='K';
-					else printf("Sudah ada dua asisten.\n");
-				//Kalo dua duanya nggak kosong, maka tidak akan ada yang terisi
-				} else if (listPraktikum[minggu][hari][lab].matkul == 3)
-				{
-					if (listAsisten[minggu][hari][lab][0]==' ') //artinya dia masih null, belum ada asisten
-					listAsisten[minggu][hari][lab][0]='K'; //Masukkan ke list karena memenuhi, dan masih kosong
-					else if (listAsisten[minggu][hari][lab][1]==' ') //Artinya udah ada satu asisten disitu, jadi ditambahnya ke array kedua
-					listAsisten[minggu][hari][lab][1]='K';
-					else printf("Sudah ada dua asisten.\n");
-				//Kalo dua duanya nggak kosong, maka tidak akan ada yang terisi
-				} else printf("Jadwal Asisten Praktikum %s tidak sesuai (tidak ada Rombongan EL2208 maupun EB2200)\n", nama);
+                }
 
-			break;
-			
-			case 'L': ;
-				strcpy(nama,"Louis");
-				if (listPraktikum[minggu][hari][lab].matkul == 2)
-				{
-					if (listAsisten[minggu][hari][lab][0]==' ') //artinya dia masih null, belum ada asisten
-					listAsisten[minggu][hari][lab][0]='L'; //Masukkan ke list karena memenuhi, dan masih kosong
-					else if (listAsisten[minggu][hari][lab][1]==' ') //Artinya udah ada satu asisten disitu, jadi ditambahnya ke array kedua
-					listAsisten[minggu][hari][lab][1]='L';
-					else printf("Sudah ada dua asisten.\n");
-				} else printf("Jadwal Asisten Praktikum %s tidak sesuai (tidak ada Rombongan EL2208)\n", nama);
 
-			break;
-			
-			case 'M': ; //mini tidak bisa di hari rabu dan kamis, dan dia asisten kode 2
-				strcpy(nama,"Mini");
-				if (hari == 2) printf("Jadwal Asisten Praktikum %s tidak sesuai (%s berhalangan di hari Rabu)\n",nama, nama);
-				else if (hari ==3) printf("Jadwal Asisten Praktikum %s tidak sesuai (%s berhalangan di hari Kamis)\n",nama, nama);
-				else if (listPraktikum[minggu][hari][lab].matkul == 2)
-				{
-					if (listAsisten[minggu][hari][lab][0]==' ') //artinya dia masih null, belum ada asisten
-					listAsisten[minggu][hari][lab][0]='M'; //Masukkan ke list karena memenuhi, dan masih kosong
-					else if (listAsisten[minggu][hari][lab][1]==' ') //Artinya udah ada satu asisten disitu, jadi ditambahnya ke array kedua
-					listAsisten[minggu][hari][lab][1]='M';
-					else printf("Sudah ada dua asisten.\n");
-				//Kalo dua duanya nggak kosong, maka tidak akan ada yang terisi
-				} else printf("Jadwal Asisten Praktikum %s tidak sesuai (tidak ada Rombongan EL2208)\n", nama);
-			break;
-			
-			case 'N': ; //Nina gabisa hari selasa, dia asisten el2208 dan eb2200
-				strcpy(nama,"Nina");
-				if (hari == 1) printf("Jadwal Asisten Praktikum %s tidak sesuai (%s berhalangan di hari Selasa)\n",nama, nama);
-				else if (listPraktikum[minggu][hari][lab].matkul == 2)
-				{
-					if (listAsisten[minggu][hari][lab][0]==' ') //artinya dia masih null, belum ada asisten
-					listAsisten[minggu][hari][lab][0]='N'; //Masukkan ke list karena memenuhi, dan masih kosong
-					else if (listAsisten[minggu][hari][lab][1]==' ') //Artinya udah ada satu asisten disitu, jadi ditambahnya ke array kedua
-					listAsisten[minggu][hari][lab][1]='N';
-					else printf("Sudah ada dua asisten.\n");
-				//Kalo dua duanya nggak kosong, maka tidak akan ada yang terisi
-				} else if (listPraktikum[minggu][hari][lab].matkul == 3)
-				{
-					if (listAsisten[minggu][hari][lab][0]==' ') //artinya dia masih null, belum ada asisten
-					listAsisten[minggu][hari][lab][0]='N'; //Masukkan ke list karena memenuhi, dan masih kosong
-					else if (listAsisten[minggu][hari][lab][1]==' ') //Artinya udah ada satu asisten disitu, jadi ditambahnya ke array kedua
-					listAsisten[minggu][hari][lab][1]='N';
-					else printf("Sudah ada dua asisten.\n");
-				//Kalo dua duanya nggak kosong, maka tidak akan ada yang terisi
-				} else printf("Jadwal Asisten Praktikum %s tidak sesuai (tidak ada Rombongan EL2208 maupun EB2200)\n", nama);
-			break;
-			
-	 	}
-	 	
+            }
+        }
 	}
-	
-	//printf("Debug (ntar apus aja) :udah berhasil quit dari Q ini \n");
-	return;
 }

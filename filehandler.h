@@ -2,7 +2,7 @@
 //                      [ Source Code ]
 //
 // Institution       : Institut Teknologi Bandung
-// Name              : 
+// Name              :
 // Module            : Tugas Besar
 // Problem           : Header file fungsi file handler
 // File Name         : filehandler.h
@@ -14,7 +14,7 @@
 //		3.  Kevin Sutardi / 13217088
 //		4.  Ramadhita Umitaibatin / 18317008
 //		5.  Muhammad Harun Al Rasyid / 18317009
-// 
+//
 //***********************************************************//
 
 #ifndef FILEHANDLER_H
@@ -25,11 +25,12 @@
 #include <string.h>
 #include "function.h"
 
-void buatProyek();
+void newProject(char listAsisten[12][5][4][2], praktikum listPraktikum[12][5][4]);
 void loadPraktikum(praktikum listPraktikum[12][5][4]);
-void loadAsisten(char list[12][5][4][2]);
-void ruleCheck();
+void loadAsisten(char listAsisten[12][5][4][2]);
+void ruleCheck(praktikum listPraktikum[12][5][4]);
 void savePraktikum(praktikum listPraktikum[12][5][4]);
 void saveAsisten(char listAsisten[12][5][4][2]);
+void loadAsistenFile(asisten listData[14]);
 
 #endif // FILEHANDLER_H
